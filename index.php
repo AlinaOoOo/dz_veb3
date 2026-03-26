@@ -154,52 +154,81 @@ if ($errors) {
 
 // Сохранение в базу данных.
 
-$user = 'db'; // Заменить на ваш логин uXXXXX
-$pass = '123'; // Заменить на пароль
+$user = 'u82467'; // Замените на ваш логин uXXXXX
+$pass = 'your_password'; // Замените на ваш пароль
+$dbname = 'u82467'; // Замените на имя вашей БД (обычно совпадает с логином)
 
 try {
-  $db = new PDO('mysql:host=localhost;dbname=test', $user, $pass,
-    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]); // Заменить test на имя БД, совпадает с логином uXXXXX
+  $db = new PDO('mysql:host=localhost;dbname=' . $dbname, $user, $pass,
+    [PDO::ATTR_PERSISTENT => true, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
   
-  // Подготовка данных для вставки
+  // Начинаем транзакцию
+  $db->beginTransaction();
+  
+  // 1. Получаем или создаем ID языков программирования
+  $language_ids = [];
+  $stmt_lang = $db->prepare("SELECT id FROM programming_languages WHERE name = ?");
+  
+  foreach ($_POST['programming_langs'] as $lang_name) {
+    $stmt_lang->execute([$lang_name]);
+    $result = $stmt_lang->fetch(PDO::FETCH_ASSOC);
+    if ($result) {
+      $language_ids[] = $result['id'];
+    } else {
+      // Если языка нет в таблице (хотя он должен быть), добавляем его
+      $stmt_insert = $db->prepare("INSERT INTO programming_languages (name) VALUES (?)");
+      $stmt_insert->execute([$lang_name]);
+      $language_ids[] = $db->lastInsertId();
+    }
+  }
+  
+  // 2. Вставляем данные пользователя
   $fio = $_POST['fio'];
   $phone = $_POST['phone'];
   $email = $_POST['email'];
   $dob = $_POST['dob'];
   $gender = $_POST['gender'];
-  $programming_langs = implode(', ', $_POST['programming_langs']); // Преобразуем массив в строку
   $bio = !empty($_POST['bio']) ? $_POST['bio'] : '';
   $contract = $_POST['contract'] === 'on' ? 1 : 0;
   
-  // Подготовленный запрос с именованными метками
-  $stmt = $db->prepare("INSERT INTO application SET 
-    fio = :fio,
-    phone = :phone,
-    email = :email,
-    birth_date = :birth_date,
-    gender = :gender,
-    programming_langs = :programming_langs,
-    bio = :bio,
-    contract_agreed = :contract,
-    created_at = NOW()");
+  $stmt_user = $db->prepare("INSERT INTO users (fio, phone, email, birth_date, gender, bio, contract_agreed) 
+                             VALUES (:fio, :phone, :email, :birth_date, :gender, :bio, :contract)");
   
-  $stmt->execute([
+  $stmt_user->execute([
     ':fio' => $fio,
     ':phone' => $phone,
     ':email' => $email,
     ':birth_date' => $dob,
     ':gender' => $gender,
-    ':programming_langs' => $programming_langs,
     ':bio' => $bio,
     ':contract' => $contract
   ]);
   
+  $user_id = $db->lastInsertId();
+  
+  // 3. Вставляем связи пользователя с языками
+  $stmt_user_lang = $db->prepare("INSERT INTO user_languages (user_id, language_id) VALUES (?, ?)");
+  
+  foreach ($language_ids as $lang_id) {
+    $stmt_user_lang->execute([$user_id, $lang_id]);
+  }
+  
+  // Фиксируем транзакцию
+  $db->commit();
+  
+  print('Данные успешно сохранены!<br/>');
+  print('Пользователь ID: ' . $user_id . '<br/>');
+  print('Выбрано языков: ' . count($language_ids));
+  
 } catch(PDOException $e){
+  // Откатываем транзакцию в случае ошибки
+  if ($db->inTransaction()) {
+    $db->rollBack();
+  }
   print('Ошибка базы данных: ' . $e->getMessage());
   exit();
 }
 
 // Делаем перенаправление.
-// Если запись не сохраняется, но ошибок не видно, то можно закомментировать эту строку чтобы увидеть ошибку.
-// Если ошибок при этом не видно, то необходимо настроить параметр display_errors для PHP.
 header('Location: ?save=1');
+?>

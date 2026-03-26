@@ -1,0 +1,429 @@
+/* ---------------------- Общие стили и анимации ---------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------------------- Шапка формы ---------------------- */
+.form-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.form-header h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.form-header p {
+    opacity: 0.9;
+    font-size: 14px;
+}
+
+/* ---------------------- Основной контент ---------------------- */
+.form-content {
+    padding: 30px;
+}
+
+/* ---------------------- Группы полей ---------------------- */
+.form-group {
+    margin-bottom: 24px;
+}
+
+/* ---------------------- Метки (labels) ---------------------- */
+label {
+    display: block;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.required::after {
+    content: " *";
+    color: #e74c3c;
+}
+
+/* ---------------------- Поля ввода ---------------------- */
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="date"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    background: #fafafa;
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #667eea;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Стили для полей с ошибками */
+.error-border {
+    border-color: #e74c3c !important;
+}
+
+.error-border:focus {
+    border-color: #e74c3c !important;
+    box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1) !important;
+}
+
+/* ---------------------- Радиокнопки ---------------------- */
+.radio-group {
+    display: flex;
+    gap: 20px;
+    padding: 8px 0;
+}
+
+.radio-group label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: normal;
+    cursor: pointer;
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+.radio-group input[type="radio"] {
+    width: auto;
+    cursor: pointer;
+    margin: 0;
+}
+
+/* ---------------------- Чекбокс ---------------------- */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-group label {
+    margin-bottom: 0;
+    font-weight: normal;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    margin: 0;
+}
+
+/* ---------------------- Множественный выбор (select multiple) ---------------------- */
+select[multiple] {
+    min-height: 140px;
+    background: #fafafa;
+    cursor: pointer;
+}
+
+select[multiple] option {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+select[multiple] option:hover {
+    background: #f0f0f0;
+}
+
+select[multiple] option:checked {
+    background: #667eea linear-gradient(0deg, #667eea 0%, #667eea 100%);
+    color: white;
+}
+
+/* Стили для подсказки под множественным выбором */
+.select-help {
+    color: #666;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+}
+
+/* ---------------------- Текстовое поле (textarea) ---------------------- */
+textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.5;
+}
+
+/* ---------------------- Сообщения об ошибках ---------------------- */
+.error {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 5px;
+    display: block;
+    animation: slideDown 0.2s ease;
+}
+
+/* ---------------------- Сообщение об успехе ---------------------- */
+.success-message {
+    background: #d4edda;
+    color: #155724;
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    border-left: 4px solid #28a745;
+    animation: slideDown 0.3s ease;
+    font-size: 14px;
+}
+
+/* ---------------------- Блок предпросмотра данных ---------------------- */
+.data-preview {
+    background: linear-gradient(135deg, #f8f9fa 0%, #f1f3f5 100%);
+    padding: 20px 25px;
+    border-radius: 12px;
+    margin-top: 20px;
+    margin-bottom: 25px;
+    border-left: 4px solid #667eea;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.data-preview h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.data-preview p {
+    margin: 10px 0;
+    line-height: 1.6;
+    word-break: break-word;
+    font-size: 14px;
+}
+
+.data-preview strong {
+    color: #333;
+    min-width: 180px;
+    display: inline-block;
+    font-weight: 600;
+}
+
+/* ---------------------- Кнопка отправки ---------------------- */
+.btn-submit {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 14px 35px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-family: inherit;
+    margin-top: 10px;
+}
+
+.btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+}
+
+.btn-submit:active {
+    transform: translateY(0);
+}
+
+/* ---------------------- Разделитель ---------------------- */
+hr {
+    margin: 20px 0;
+    border: none;
+    height: 1px;
+    background: linear-gradient(to right, #e0e0e0, transparent);
+}
+
+/* ---------------------- Анимации ---------------------- */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ---------------------- Адаптивный дизайн ---------------------- */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 15px;
+    }
+    
+    .form-content {
+        padding: 20px;
+    }
+    
+    .form-header {
+        padding: 20px;
+    }
+    
+    .form-header h1 {
+        font-size: 24px;
+    }
+    
+    .radio-group {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .data-preview p strong {
+        display: block;
+        margin-bottom: 5px;
+        min-width: auto;
+    }
+    
+    .data-preview {
+        padding: 15px;
+    }
+    
+    select[multiple] {
+        min-height: 120px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        border-radius: 15px;
+    }
+    
+    .form-content {
+        padding: 15px;
+    }
+    
+    input[type="text"],
+    input[type="tel"],
+    input[type="email"],
+    input[type="date"],
+    select,
+    textarea {
+        padding: 10px 12px;
+        font-size: 13px;
+    }
+    
+    .btn-submit {
+        padding: 12px 25px;
+        font-size: 14px;
+    }
+    
+    .data-preview h3 {
+        font-size: 16px;
+    }
+    
+    .data-preview p {
+        font-size: 13px;
+    }
+}
+
+/* ---------------------- Дополнительные улучшения ---------------------- */
+
+/* Стили для placeholder */
+::placeholder {
+    color: #999;
+    opacity: 1;
+}
+
+:-ms-input-placeholder {
+    color: #999;
+}
+
+::-ms-input-placeholder {
+    color: #999;
+}
+
+/* Улучшенные стили для фокуса на радио-кнопках */
+.radio-group label:hover {
+    color: #667eea;
+}
+
+/* Стили для disabled состояний (если понадобятся) */
+input:disabled,
+select:disabled,
+textarea:disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Анимация для появления полей с ошибками */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+.error-border {
+    animation: shake 0.3s ease;
+}
+
+/* Стили для скроллбара (для Webkit браузеров) */
+select[multiple]::-webkit-scrollbar {
+    width: 8px;
+}
+
+select[multiple]::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+select[multiple]::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+select[multiple]::-webkit-scrollbar-thumb:hover {
+    background: #667eea;
+}

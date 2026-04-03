@@ -5,13 +5,26 @@
     <title>Анкета</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 500px;
-            margin: 20px auto;
-            padding: 10px;
+            font-family: Arial, Helvetica, sans-serif;
+            max-width: 550px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #f5f5f5;
         }
-        input, select, textarea {
-            margin-top: 5px;
+        form {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        p {
+            margin-bottom: 18px;
+        }
+        label {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
         }
         input[type="text"],
         input[type="email"],
@@ -20,14 +33,59 @@
         select,
         textarea {
             width: 100%;
-            padding: 5px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+        textarea {
+            height: 80px;
+            resize: vertical;
+        }
+        input[type="radio"] {
+            width: auto;
+            margin-right: 5px;
+        }
+        .radio-group {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: normal;
+        }
+        select[multiple] {
+            height: 120px;
+        }
+        small {
+            display: block;
+            margin-top: 5px;
+            color: #666;
+            font-size: 12px;
         }
         button {
-            margin-top: 10px;
-            padding: 5px 15px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #45a049;
         }
         .error {
             color: red;
+            padding: 10px;
+            background: #ffeeee;
+            border-left: 3px solid red;
+            margin-bottom: 15px;
+        }
+        .success {
+            color: green;
+            padding: 10px;
+            background: #eeffee;
+            border-left: 3px solid green;
+            margin-bottom: 15px;
         }
     </style>
 </head>
@@ -53,20 +111,23 @@
         
         <p>
             <label>Дата рождения:<br>
-                <input type="date" name="brithDate" >
+                <input type="date" name="brithDate">
             </label>
         </p>
         
         <p>
-            <label>Пол:<br>
-                <input type="radio" name="gender" value="male" > Мужской
+            <label>Пол:</label><br>
+            <label class="radio-group">
+                <input type="radio" name="gender" value="male"> Мужской
+            </label>
+            <label class="radio-group">
                 <input type="radio" name="gender" value="female"> Женский
             </label>
         </p>
         
         <p>
             <label>Языки программирования:<br>
-                <select name="lang_id[]" multiple >
+                <select name="lang_id[]" multiple>
                     <option value="1">Pascal</option>
                     <option value="2">C</option>
                     <option value="3">C++</option>
@@ -81,7 +142,7 @@
                     <option value="12">Go</option>
                 </select>
             </label>
-            <br><small>(Зажмите Ctrl для выбора нескольких)</small>
+            <small>(Зажмите Ctrl для выбора нескольких)</small>
         </p>
         
         <p>

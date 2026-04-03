@@ -1,6 +1,5 @@
-Таблица users:
 
-CREATE TABLE users( 
+CREATE TABLE user( 
     id INT AUTO_INCREMENT PRIMARY KEY, 
     fio VARCHAR(150), 
     phone VARCHAR(50), 
@@ -13,15 +12,13 @@ CREATE TABLE users(
 
 
 
-Таблица languages:
-CREATE TABLE IF NOT EXISTS languages (     
+CREATE TABLE IF NOT EXISTS programm_languages (     
     id INT PRIMARY KEY,     
     name VARCHAR(50) NOT NULL 
 );
 
 
 
-Таблица user_languages:
 CREATE TABLE IF NOT EXISTS user_languages (     
     user_id INT NOT NULL,     
     lang_id INT NOT NULL,     
@@ -29,3 +26,18 @@ CREATE TABLE IF NOT EXISTS user_languages (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,     
     FOREIGN KEY (lang_id) REFERENCES languages(id) ON DELETE CASCADE 
 );
+
+INSERT INTO languages (id, name) VALUES 
+(1, 'Pascal'),
+(2, 'C'),
+(3, 'C++'),
+(4, 'JavaScript'),
+(5, 'PHP'),
+(6, 'Python'),
+(7, 'Java'),
+(8, 'Haskel'),
+(9, 'Clojure'),
+(10, 'Prolog'),
+(11, 'Scala'),
+(12, 'Go')
+ON DUPLICATE KEY UPDATE name = VALUES(name);
